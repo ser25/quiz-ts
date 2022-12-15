@@ -1,0 +1,22 @@
+.admin{
+    background-color: #252d4a;
+    width: 450px;
+    min-height: 200px;
+    border-radius: 15px;
+    padding: 20px;
+    /*display: flex;*/
+    box-shadow: 10px 10px 42px 0px rgba(0, 0, 0, 0.75);
+}
+.Input{
+    color: #fff;
+    width: 100%;
+}
+.admin__questionText{
+    display: flex;
+}
+.admin__answerOption{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
