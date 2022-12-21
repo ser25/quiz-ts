@@ -1,0 +1,17 @@
+.adminDelete{
+    position: relative;
+    border: 2px solid white;
+
+}
+.adminDelete:not(:last-child){
+    margin-bottom: 20px;
+}
+.adminDelete:first-child{
+    margin-top: 20px;
+}
+.deleteButton{
+    position: absolute;
+    right: 0;
+    top: 15px;
+
+}

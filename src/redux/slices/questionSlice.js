@@ -46,6 +46,10 @@ export const questionSlice = createSlice({
             state.showScore = false
             state.score = 0
             state.click = []
+        },
+        removeTodo(state, action) {
+            console.log(action.payload)
+            state.items = state.items.filter(item => item.id !== action.payload);
         }
     },
     extraReducers: {
@@ -68,6 +72,6 @@ export const questionSlice = createSlice({
 
 })
 
-export const {setCurrentQuestion, setItems, setShowScore, setScore, refresh, setClick} = questionSlice.actions
+export const {setCurrentQuestion, removeTodo, setShowScore, setScore, refresh, setClick} = questionSlice.actions
 
 export default questionSlice.reducer

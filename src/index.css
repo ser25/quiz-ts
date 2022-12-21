@@ -4,6 +4,7 @@
   box-sizing: border-box;
   color: rgb(255, 255, 255);
   font-family: 'Roboto', sans-serif;
+  text-decoration: none;
 }
 body{
   background-color: #7cc6fe;
