@@ -1,9 +1,11 @@
 import React, {useRef} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import './statistic.css'
 import cx from 'classnames'
 import {refresh, setShowScore} from "../../redux/slices/questionSlice";
+import ScrollToTop from "react-scroll-to-top";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const Statistic = () => {
     const questions = useSelector(state => state.question.items)
@@ -31,15 +33,19 @@ const Statistic = () => {
                                 >{q.answerText}</div>
                             )}
                         </div>
-                        <div className='statistic__answer'>Ваша відповідь: <span>{click[(question.id) - 1]}</span></div>
+                        <div className='statistic__answer'>Ваша відповідь:<span>{click[(question.id) - 1]}</span>
+                        </div>
                     </div>
                 </Link>
                 )}
             <Link to='/' >
-                <button onClick={() => dispatch(refresh())}>Спробувати ще раз</button>
+                <button style={{marginTop: '20px'}} onClick={() => dispatch(refresh())}>Спробувати ще раз</button>
             </Link>
 
+            <ScrollToTop  top={150} smooth />
+
         </div>
+
     );
 };
 

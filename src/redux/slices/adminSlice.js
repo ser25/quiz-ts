@@ -93,7 +93,7 @@ export const adminSlice = createSlice({
                 & !(state.answerOption3.isCorrect)) {
                 state.answerOption.isCorrect = action.payload
             } else {
-                state.answerOption.isCorrect = false
+                state.answerOption.isCorrect = true
                 state.answerOption1.isCorrect = false
                 state.answerOption2.isCorrect = false
                 state.answerOption3.isCorrect = false
@@ -106,7 +106,7 @@ export const adminSlice = createSlice({
                 state.answerOption1.isCorrect = action.payload
             } else {
                 state.answerOption.isCorrect = false
-                state.answerOption1.isCorrect = false
+                state.answerOption1.isCorrect = true
                 state.answerOption2.isCorrect = false
                 state.answerOption3.isCorrect = false
             }
@@ -120,7 +120,7 @@ export const adminSlice = createSlice({
             } else {
                 state.answerOption.isCorrect = false
                 state.answerOption1.isCorrect = false
-                state.answerOption2.isCorrect = false
+                state.answerOption2.isCorrect = true
                 state.answerOption3.isCorrect = false
             }
 
@@ -134,7 +134,7 @@ export const adminSlice = createSlice({
                 state.answerOption.isCorrect = false
                 state.answerOption1.isCorrect = false
                 state.answerOption2.isCorrect = false
-                state.answerOption3.isCorrect = false
+                state.answerOption3.isCorrect = true
             }
         },
         setIsAdminCreate(state, action) {
