@@ -5,6 +5,7 @@ import './questions.css'
 import Skeleton from "../skeletonreact/Skeletonreact";
 import ShowScore from "../showScore/ShowScore";
 import cx from 'classnames'
+import Timer from "../Timer/Timer";
 
 function Questions() {
 
@@ -77,7 +78,9 @@ function Questions() {
                                     )}
                                 </div>
                             </div>}
-
+                        <div className='quiz__timer'>
+                            <Timer />
+                        </div>
 
                     </div>
 

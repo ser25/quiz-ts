@@ -123,19 +123,7 @@ const AdminQuestionText = () => {
                     </div>
 
                 </div>
-                {/*{!!errors?.answerOption3 && !!errors?.answerOption2 && !!errors?.answerOption1 &&*/}
-                {/*    !!errors?.answerOption*/}
-                {/*    ?*/}
-                {/*    <button onClick={() => {*/}
-                {/*        dispatch(fetchAdmin())*/}
-                {/*        dispatch(refreshAnswerOption())*/}
-
-                {/*    }}>Додати*/}
-                {/*    </button>*/}
-                {/*    :*/}
-                {/*    <button type={'submit'}>Провірка</button>*/}
-                {/*}*/}
-                <button type={'submit'}>yes</button>
+                <button type={'submit'}>Додати</button>
 
             </form>
         </>

@@ -33,7 +33,7 @@ const Statistic = () => {
                                 >{q.answerText}</div>
                             )}
                         </div>
-                        <div className='statistic__answer'>Ваша відповідь:<span>{click[(question.id) - 1]}</span>
+                        <div className='statistic__answer'>Ваша відповідь: <span>{click[(question.id) - 1]}</span>
                         </div>
                     </div>
                 </Link>

@@ -48,7 +48,6 @@ export const questionSlice = createSlice({
             state.click = []
         },
         removeTodo(state, action) {
-            console.log(action.payload)
             state.items = state.items.filter(item => item.id !== action.payload);
         }
     },
