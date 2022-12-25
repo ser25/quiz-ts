@@ -25,3 +25,9 @@
     width: 80%;
     transform: translateX(50px);
 }
+.admin__checkboxText{
+    margin: 15px 0;
+}
+.admin__checkboxText red{
+    color: red;
+}

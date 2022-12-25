@@ -13,8 +13,11 @@ import {
     setQuestionText
 } from "../../../redux/slices/adminSlice";
 import {useDispatch, useSelector} from "react-redux";
-import {useForm} from "react-hook-form";
+import {useForm, Controller} from "react-hook-form";
 import MyInput from "../../../UI/Input/Input";
+import cn from 'classnames'
+import login from "../../../component/Login/Login";
+import MyCheckBox from "../../../component/MyCheckBox/MyCheckBox";
 
 const AdminQuestionText = () => {
     const dispatch = useDispatch()
@@ -29,16 +32,19 @@ const AdminQuestionText = () => {
             errors,
         },
         handleSubmit,
-        reset
+        reset,
+        control
     } = useForm({
         mode: 'onBlur',
     })
+    const sss = (data) => {
+
+    }
     const onSubmit = (data) => {
         dispatch(fetchAdmin())
         dispatch(refreshAnswerOption())
         reset()
     }
-    console.log(!errors?.answerOption3)
 
     return (
         <>
@@ -54,13 +60,27 @@ const AdminQuestionText = () => {
                     onChange={(event) => dispatch(setQuestionText(event.target.value))}
                 />
 
-                <div style={{margin: '15px 0'}}>Позначте галочкою правильну відповідь</div>
+                <div className={cn("admin__checkboxText")}>Позначте галочкою правильну відповідь</div>
 
                 <div className={'admin__answerOptions'}>
                     <div className={'admin__answerOption'}>
-                        <Checkbox checked={answerOption.isCorrect}
+                        <Checkbox
+                                  {...register('checkbox',{
+                                      required: true
+                                  })}
+                                  checked={answerOption.isCorrect}
                                   onChange={(event) => dispatch(setAnswerOptionIsCorrect(event.target.checked))}
-                                  labelplacement="end"
+                                  sx={!!errors?.checkbox ? {
+                                      "& path": {
+                                          fill: 'red'
+                                      }
+                                  } : {
+                                      "& path": {
+                                          fill: 'white'
+                                      }
+                                  }}
+
+
                         />
                         <MyInput
                             error={!!errors?.answerOption}
@@ -74,9 +94,22 @@ const AdminQuestionText = () => {
                         />
                     </div>
                     <div className={'admin__answerOption'}>
-                        <Checkbox checked={answerOption1.isCorrect}
+                        <Checkbox
+                            {...register('checkbox',{
+                            required: true
+                        })}
+                            checked={answerOption1.isCorrect}
                                   onChange={(event) => dispatch(setAnswerOption1IsCorrect(event.target.checked))}
                                   labelplacement="end"
+                                  sx={!!errors?.checkbox ? {
+                                      "& path": {
+                                          fill: 'red'
+                                      }
+                                  } : {
+                                      "& path": {
+                                          fill: 'white'
+                                      }
+                                  }}
                         />
                         <MyInput
                             error={!!errors?.answerOption1}
@@ -90,9 +123,21 @@ const AdminQuestionText = () => {
                         />
                     </div>
                     <div className={'admin__answerOption'}>
-                        <Checkbox checked={answerOption2.isCorrect}
+                        <Checkbox
+                            {...register('checkbox',{
+                                required: true
+                            })}
+                            checked={answerOption2.isCorrect}
                                   onChange={(event) => dispatch(setAnswerOption2IsCorrect(event.target.checked))}
-                                  labelplacement="end"
+                            sx={!!errors?.checkbox ? {
+                                "& path": {
+                                    fill: 'red'
+                                }
+                            } : {
+                                "& path": {
+                                    fill: 'white'
+                                }
+                            }}
                         />
                         <MyInput
                             error={!!errors?.answerOption2}
@@ -106,9 +151,21 @@ const AdminQuestionText = () => {
                         />
                     </div>
                     <div className={'admin__answerOption'}>
-                        <Checkbox checked={answerOption3.isCorrect}
+                        <Checkbox
+                            {...register('checkbox',{
+                                required: true
+                            })}
+                            checked={answerOption3.isCorrect}
                                   onChange={(event) => dispatch(setAnswerOption3IsCorrect(event.target.checked))}
-                                  labelplacement="end"
+                            sx={!!errors?.checkbox ? {
+                                "& path": {
+                                    fill: 'red'
+                                }
+                            } : {
+                                "& path": {
+                                    fill: 'white'
+                                }
+                            }}
                         />
                         <MyInput
                             error={!!errors?.answerOption3}
