@@ -21,7 +21,6 @@ function Questions() {
     // const [showScore, setShowScore] = useState(true)
     // const showScore = useSelector(state => state.question.showScore)
     const {currentQuestion, showScore, score, skeleton} = useSelector(state => state.question)
-    const timerValue = useSelector(state => state.timer.timerValue)
     const getQuestions = async () => {
         dispatch(fetchQuestion())
     }
@@ -50,6 +49,8 @@ function Questions() {
             dispatch(setShowScore(true))
         }
     }
+
+
     return (
         <div className="Questions">
             {
@@ -68,18 +69,21 @@ function Questions() {
                                 <div className='answer__section'>
                                     {questions[currentQuestion].answerOptions.map(q =>
 
-                                        <button
-                                            key={q.answerText}
-                                            onClick={() => handleAnswerOptionClick(q.isCorrect, q)}
-                                        >{q.answerText}
-                                        </button>
+                                            <button
+                                                key={q.answerText}
+                                                onClick={() => handleAnswerOptionClick(q.isCorrect, q)}
+                                            >{q.answerText}
+                                            </button>
+
                                     )}
                                 </div>
                             </div>}
-                        {!!timerValue && <div className='quiz__timer'>
-                            <Timer/>
-                        </div>}
+                        <div className='quiz__timer'>
+                            <Timer />
+                        </div>
+
                     </div>
+
             }
         </div>
     )
