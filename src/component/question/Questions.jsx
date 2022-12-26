@@ -13,6 +13,7 @@ function Questions() {
 
 
     const questions = useSelector(state => state.question.items)
+    const timer = useSelector(state => state.timer.timer)
     const dispatch = useDispatch()
 
     // const [currentQuestion, setCurrentQuestion] = useState(0)
@@ -78,9 +79,10 @@ function Questions() {
                                     )}
                                 </div>
                             </div>}
-                        <div className='quiz__timer'>
+                        {timer&& <div className='quiz__timer'>
                             <Timer />
-                        </div>
+                        </div>}
+
 
                     </div>
 
