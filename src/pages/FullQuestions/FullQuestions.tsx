@@ -6,10 +6,19 @@ import '../../component/Statistic/statistic.css'
 import {useSelector} from "react-redux";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const FullQuestions = () => {
-    const [question, setQuestion] = useState()
+const FullQuestions: React.FC = () => {
+    const [question, setQuestion] = useState<{
+        id: string,
+        questionText: string,
+        answerOptions: {
+            answerText: string,
+            isCorrect: boolean,
+            isClick: number,
+        }[],
+
+    }>()
     const click = useSelector(state => state.question.click)
-    const {id} = useParams()
+    const {id} = useParams() as any
     const navigate = useNavigate()
     const goBack = () => navigate(-1)
     useEffect(() => {
@@ -26,8 +35,9 @@ const FullQuestions = () => {
         fetchQuestion()
     }, [])
     if(!question){
-        return 'Завантаження...'
+        return <>Завантаження...</>
     }
+    console.log(question)
     return (
         <div style={{position: 'relative'}} className='statistic'>
             <h2  className='statistic__text'>{question.questionText}</h2>

@@ -13,7 +13,7 @@ function Questions() {
 
 
     const questions = useSelector(state => state.question.items)
-    const timer = useSelector(state => state.timer.timer)
+    const timer = useSelector(state => state.timer.timerValue)
     const dispatch = useDispatch()
 
     // const [currentQuestion, setCurrentQuestion] = useState(0)
