@@ -1,14 +1,26 @@
 import React, {forwardRef} from 'react';
 import {TextField} from "@mui/material";
-
-const MyInput = forwardRef((props, ref) => {
+interface MyInputFormProps {
+    color: 'success' | 'primary',
+    type: string,
+    value: string,
+    placeholder: string,
+    style: {margin: string},
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+}
+type FieldValues = Record<string, any>
+interface MyInputAdminDeleteProps {
+    error: boolean,
+    helperText: string | undefined
+    label: string,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
+}
+const MyInput: React.FC<MyInputFormProps | MyInputAdminDeleteProps> = forwardRef((props, ref) => {
     return <TextField variant="standard"
                       inputRef={ref}
                       autoComplete="off"
                       fullWidth
                       id="outlined-basic"
-                      autoComplete="off"
-                      id="standard-basic"
                       {...props}
                       sx={{
                               "& .MuiFormLabel-root": {

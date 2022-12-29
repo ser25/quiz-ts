@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import '../../App.css'
 import {Link} from "react-router-dom";
 import SingUp from "../../component/SingUp/SingUp";
 import CloseIcon from "@mui/icons-material/Close";
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
     return (
         <div style={{position: 'relative'}} className={'containerBody'}>
             <h1>RegisterPage</h1>

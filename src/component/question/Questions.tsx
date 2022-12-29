@@ -1,42 +1,48 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useEffect, useRef} from "react";
-import {fetchQuestion, setCurrentQuestion, setShowScore, setScore, setClick} from "../../redux/slices/questionSlice";
+import {
+    fetchQuestion,
+    setCurrentQuestion,
+    setShowScore,
+    setScore,
+    setClick,
+    SelectQuestions, SelectQuestion
+} from "../../redux/slices/questionSlice";
 import './questions.css'
 import Skeleton from "../skeletonreact/Skeletonreact";
 import ShowScore from "../showScore/ShowScore";
-import cx from 'classnames'
 import Timer from "../Timer/Timer";
+import {SelectTimer} from "../../redux/slices/timerSlice";
+import {useAppDispatch} from "../../redux/store";
+
+type answerItem = {
+    answerText: string,
+    isCorrect: boolean,
+    isClick: number,
+}
 
 function Questions() {
 
     // https://632742f4ba4a9c47533406de.mockapi.io/items
 
 
-    const questions = useSelector(state => state.question.items)
-    const timer = useSelector(state => state.timer.timerValue)
-    const dispatch = useDispatch()
-
-    // const [currentQuestion, setCurrentQuestion] = useState(0)
-    // const currentQuestion = useSelector(state => state.question.currentQuestion)
-    // const [score, setScore] = useState(0)
-    // const [showScore, setShowScore] = useState(true)
-    // const showScore = useSelector(state => state.question.showScore)
-    const {currentQuestion, showScore, score, skeleton} = useSelector(state => state.question)
+    const questions = useSelector(SelectQuestions)
+    const {timerValue} = useSelector(SelectTimer)
+    const dispatch = useAppDispatch()
+    const {currentQuestion, showScore, score, skeleton} = useSelector(SelectQuestion)
     const getQuestions = async () => {
         dispatch(fetchQuestion())
     }
     useEffect(() => {
         getQuestions()
     }, [])
-
-    const isClick = (current) => {
+    const isClick = (current: answerItem) => {
         dispatch(setClick(current.answerText))
     }
 
-    const handleAnswerOptionClick = (isCorrect, current) => {
+    const handleAnswerOptionClick = (isCorrect: boolean, current: answerItem) => {
         isClick(current)
         if (isCorrect) {
-            // setScore(score + 1)
             dispatch(setScore(score + 1))
 
         }
@@ -45,7 +51,6 @@ function Questions() {
 
         if (nextQuestion < questions.length) {
             dispatch(setCurrentQuestion(nextQuestion))
-            // setCurrentQuestion(nextQuestion)
         } else {
             dispatch(setShowScore(true))
         }
@@ -59,7 +64,7 @@ function Questions() {
                     ? <ShowScore/>
                     : <div className='quiz'>
                         {skeleton
-                            ? <Skeleton/>
+                            ? <Skeleton />
                             : <div className='quiz__body'>
                                 <div className='question__section'>
                                     <div className='question__count'>
@@ -70,17 +75,16 @@ function Questions() {
                                 <div className='answer__section'>
                                     {questions[currentQuestion].answerOptions.map(q =>
 
-                                            <button
-                                                key={q.answerText}
-                                                onClick={() => handleAnswerOptionClick(q.isCorrect, q)}
-                                            >{q.answerText}
-                                            </button>
-
+                                        <button
+                                            key={q.answerText}
+                                            onClick={() => handleAnswerOptionClick(q.isCorrect, q)}
+                                        >{q.answerText}
+                                        </button>
                                     )}
                                 </div>
                             </div>}
-                        {timer&& <div className='quiz__timer'>
-                            <Timer />
+                        {!!timerValue && <div className='quiz__timer'>
+                            <Timer/>
                         </div>}
 
 

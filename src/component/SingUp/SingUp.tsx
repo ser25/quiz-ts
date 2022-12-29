@@ -2,19 +2,21 @@ import React from 'react';
 import {getAuth, createUserWithEmailAndPassword,} from "firebase/auth";
 import {useNavigate} from 'react-router-dom'
 import Form from "../Form/Form";
-import {useDispatch} from "react-redux";
 import {setUser} from "../../redux/slices/userSlice";
+import {useAppDispatch} from "../../redux/store";
+
+
 const SingUp = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const handleRegister = (email, password) =>{
+    const handleRegister = (email: string, password: string) =>{
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
             .then(({user})=>{
                 dispatch(setUser({
                     email: user.email,
-                    id: user?.id,
-                    token: user?.accessToken,
+                    id: user.uid,
+                    token: user.refreshToken,
                 }))
                 navigate('/')
             })

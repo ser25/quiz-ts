@@ -5,19 +5,23 @@ import cx from "classnames";
 import '../../component/Statistic/statistic.css'
 import {useSelector} from "react-redux";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import {SelectQuestion} from "../../redux/slices/questionSlice";
+
+type answerItem = {
+    answerText: string,
+    isCorrect: boolean,
+    isClick: number,
+}
 
 const FullQuestions: React.FC = () => {
     const [question, setQuestion] = useState<{
         id: string,
         questionText: string,
-        answerOptions: {
-            answerText: string,
-            isCorrect: boolean,
-            isClick: number,
-        }[],
+        answerOptions: answerItem[],
 
     }>()
-    const click = useSelector(state => state.question.click)
+    const {click} = useSelector(SelectQuestion)
+    console.log(click)
     const {id} = useParams() as any
     const navigate = useNavigate()
     const goBack = () => navigate(-1)
@@ -34,26 +38,26 @@ const FullQuestions: React.FC = () => {
 
         fetchQuestion()
     }, [])
-    if(!question){
+    if (!question) {
         return <>Завантаження...</>
     }
     console.log(question)
     return (
         <div style={{position: 'relative'}} className='statistic'>
-            <h2  className='statistic__text'>{question.questionText}</h2>
-                <ArrowBackIcon
-                    onClick={goBack}
-                    sx={{
-                        position: 'absolute',
-                        top: '42px',
-                        cursor: 'pointer'
-                    }}/>
+            <h2 className='statistic__text'>{question.questionText}</h2>
+            <ArrowBackIcon
+                onClick={goBack}
+                sx={{
+                    position: 'absolute',
+                    top: '42px',
+                    cursor: 'pointer'
+                }}/>
 
             <div className='statistic__section'>
                 {question.answerOptions.map(q =>
                     <div
                         onClick={(event) => event.preventDefault()}
-                        className={cx({'green' : q.isCorrect}, 'statistic__question' )}
+                        className={cx({'green': q.isCorrect}, 'statistic__question')}
                         key={q.answerText}
 
                     >{q.answerText}</div>

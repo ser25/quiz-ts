@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '../admin.css'
 import {Checkbox, TextField} from "@mui/material";
 import {
-    fetchAdmin, refreshAnswerOption,
+    fetchAdmin, refreshAnswerOption, SelectAdmin,
     setAnswerOption1IsCorrect,
     setAnswerOption1Text,
     setAnswerOption2IsCorrect,
@@ -12,20 +12,25 @@ import {
     setAnswerOptionText, setIsError,
     setQuestionText
 } from "../../../redux/slices/adminSlice";
-import {useDispatch, useSelector} from "react-redux";
-import {useForm, Controller} from "react-hook-form";
+import {useSelector} from "react-redux";
+import {useForm, SubmitHandler} from "react-hook-form";
 import MyInput from "../../../UI/Input/Input";
 import cn from 'classnames'
-import login from "../../../component/Login/Login";
-import MyCheckBox from "../../../component/MyCheckBox/MyCheckBox";
+import {useAppDispatch} from "../../../redux/store";
+
+interface IShippingField {
+    text: string
+    checkbox: string
+    answerOption: string
+    answerOption1: string
+    answerOption2: string
+    answerOption3: string
+
+}
 
 const AdminQuestionText = () => {
-    const dispatch = useDispatch()
-    const questionText = useSelector(state => state.admin.questionText)
-    const answerOption = useSelector(state => state.admin.answerOption)
-    const answerOption1 = useSelector(state => state.admin.answerOption1)
-    const answerOption2 = useSelector(state => state.admin.answerOption2)
-    const answerOption3 = useSelector(state => state.admin.answerOption3)
+    const dispatch = useAppDispatch()
+    const {questionText, answerOption, answerOption1, answerOption2, answerOption3} = useSelector(SelectAdmin)
     const {
         register,
         formState: {
@@ -33,14 +38,11 @@ const AdminQuestionText = () => {
         },
         handleSubmit,
         reset,
-        control
-    } = useForm({
+    } = useForm<IShippingField>({
         mode: 'onBlur',
     })
-    const sss = (data) => {
 
-    }
-    const onSubmit = (data) => {
+    const onSubmit: SubmitHandler<IShippingField> = () => {
         dispatch(fetchAdmin())
         dispatch(refreshAnswerOption())
         reset()
@@ -57,7 +59,8 @@ const AdminQuestionText = () => {
                         required: "Обов'язково заповнити це поле"
                     })}
                     value={questionText}
-                    onChange={(event) => dispatch(setQuestionText(event.target.value))}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                        dispatch(setQuestionText(event.target.value))}
                 />
 
                 <div className={cn("admin__checkboxText")}>Позначте галочкою правильну відповідь</div>
@@ -65,20 +68,21 @@ const AdminQuestionText = () => {
                 <div className={'admin__answerOptions'}>
                     <div className={'admin__answerOption'}>
                         <Checkbox
-                                  {...register('checkbox',{
-                                      required: true
-                                  })}
-                                  checked={answerOption.isCorrect}
-                                  onChange={(event) => dispatch(setAnswerOptionIsCorrect(event.target.checked))}
-                                  sx={!!errors?.checkbox ? {
-                                      "& path": {
-                                          fill: 'red'
-                                      }
-                                  } : {
-                                      "& path": {
-                                          fill: 'white'
-                                      }
-                                  }}
+                            {...register('checkbox', {
+                                required: true
+                            })}
+                            checked={answerOption.isCorrect}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                dispatch(setAnswerOptionIsCorrect(event.target.checked))}
+                            sx={!!errors?.checkbox ? {
+                                "& path": {
+                                    fill: 'red'
+                                }
+                            } : {
+                                "& path": {
+                                    fill: 'white'
+                                }
+                            }}
 
 
                         />
@@ -90,26 +94,27 @@ const AdminQuestionText = () => {
                                 required: "Обов'язково заповнити це поле"
                             })}
                             value={answerOption.answerText}
-                            onChange={(event) => dispatch(setAnswerOptionText(event.target.value))}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                dispatch(setAnswerOptionText(event.target.value))}
                         />
                     </div>
                     <div className={'admin__answerOption'}>
                         <Checkbox
-                            {...register('checkbox',{
-                            required: true
-                        })}
+                            {...register('checkbox', {
+                                required: true
+                            })}
                             checked={answerOption1.isCorrect}
-                                  onChange={(event) => dispatch(setAnswerOption1IsCorrect(event.target.checked))}
-                                  labelplacement="end"
-                                  sx={!!errors?.checkbox ? {
-                                      "& path": {
-                                          fill: 'red'
-                                      }
-                                  } : {
-                                      "& path": {
-                                          fill: 'white'
-                                      }
-                                  }}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                dispatch(setAnswerOption1IsCorrect(event.target.checked))}
+                            sx={!!errors?.checkbox ? {
+                                "& path": {
+                                    fill: 'red'
+                                }
+                            } : {
+                                "& path": {
+                                    fill: 'white'
+                                }
+                            }}
                         />
                         <MyInput
                             error={!!errors?.answerOption1}
@@ -119,16 +124,17 @@ const AdminQuestionText = () => {
                                 required: "Обов'язково заповнити це поле"
                             })}
                             value={answerOption1.answerText}
-                            onChange={(event) => dispatch(setAnswerOption1Text(event.target.value))}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                dispatch(setAnswerOption1Text(event.target.value))}
                         />
                     </div>
                     <div className={'admin__answerOption'}>
                         <Checkbox
-                            {...register('checkbox',{
+                            {...register('checkbox', {
                                 required: true
                             })}
                             checked={answerOption2.isCorrect}
-                                  onChange={(event) => dispatch(setAnswerOption2IsCorrect(event.target.checked))}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => dispatch(setAnswerOption2IsCorrect(event.target.checked))}
                             sx={!!errors?.checkbox ? {
                                 "& path": {
                                     fill: 'red'
@@ -147,16 +153,18 @@ const AdminQuestionText = () => {
                                 required: "Обов'язково заповнити це поле"
                             })}
                             value={answerOption2.answerText}
-                            onChange={(event) => dispatch(setAnswerOption2Text(event.target.value))}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                dispatch(setAnswerOption2Text(event.target.value))}
                         />
                     </div>
                     <div className={'admin__answerOption'}>
                         <Checkbox
-                            {...register('checkbox',{
+                            {...register('checkbox', {
                                 required: true
                             })}
                             checked={answerOption3.isCorrect}
-                                  onChange={(event) => dispatch(setAnswerOption3IsCorrect(event.target.checked))}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                dispatch(setAnswerOption3IsCorrect(event.target.checked))}
                             sx={!!errors?.checkbox ? {
                                 "& path": {
                                     fill: 'red'
@@ -175,7 +183,8 @@ const AdminQuestionText = () => {
                                 required: "Обов'язково заповнити це поле"
                             })}
                             value={answerOption3.answerText}
-                            onChange={(event) => dispatch(setAnswerOption3Text(event.target.value))}
+                            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                dispatch(setAnswerOption3Text(event.target.value))}
                         />
                     </div>
 

@@ -1,15 +1,18 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect, FC} from 'react';
+import { useSelector} from "react-redux";
 import cx from "classnames";
 import './adminDelete.css'
-import {fetchQuestion} from "../../../redux/slices/questionSlice";
+import {fetchQuestion, SelectQuestions} from "../../../redux/slices/questionSlice";
 import ClearIcon from '@mui/icons-material/Clear';
 import {fetchAdminDelete} from "../../../redux/slices/adminSlice";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import ScrollToTop from "react-scroll-to-top";
-const AdminDelete = () => {
-    const questions = useSelector(state => state.question.items)
-    const dispatch = useDispatch()
+import {useAppDispatch} from "../../../redux/store";
+
+
+const AdminDelete: FC = () => {
+    const questions = useSelector(SelectQuestions)
+    const dispatch = useAppDispatch()
     const getQuestions = async () => {
         dispatch(fetchQuestion())
     }
@@ -39,7 +42,7 @@ const AdminDelete = () => {
                             <div style={{marginBottom: 0}} className='statistic__section'>
                                 {question.answerOptions.map(q =>
                                     <div
-                                        onClick={(event) => event.preventDefault()}
+                                        onClick={(event:React.MouseEvent<HTMLDivElement>) => event.preventDefault()}
                                         className={cx('statistic__question')}
                                         key={q.answerText}
 

@@ -1,16 +1,16 @@
-import React from 'react';
+import React, {FC} from 'react';
 import './admin.css'
 import {useDispatch, useSelector} from "react-redux";
-import {setIsAdminCreate} from "../../redux/slices/adminSlice";
+import {SelectAdmin, setIsAdminCreate} from "../../redux/slices/adminSlice";
 import AdminQuestionText from "./adminQuestionText/AdminQuestionText";
 import AdminDelete from "./AdminDelete/AdminDelete";
 import {useNavigate} from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 
-const Admin = () => {
+const Admin: FC = () => {
     const dispatch = useDispatch()
-    const isAdminCreate = useSelector(state => state.admin.isAdminCreate)
+    const {isAdminCreate} = useSelector(SelectAdmin)
     const navigate = useNavigate()
     const goBack = () => navigate(-1)
     return (

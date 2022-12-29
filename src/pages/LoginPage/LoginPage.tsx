@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {FC} from 'react';
 import '../../App.css'
 import {Link} from "react-router-dom";
 import Login from '../../component/Login/Login'
 import CloseIcon from '@mui/icons-material/Close';
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
     return (
         <div style={{position: 'relative'}} className={'containerBody'}>
             <h1>

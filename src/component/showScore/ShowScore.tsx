@@ -1,11 +1,11 @@
 import React from 'react';
-import {setCurrentQuestion, setScore, setShowScore} from "../../redux/slices/questionSlice";
+import {SelectQuestions, SelectQuestion, setCurrentQuestion, setScore, setShowScore} from "../../redux/slices/questionSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 
 const ShowScore = () => {
-    const questions = useSelector(state => state.question.items)
-    const score = useSelector(state => state.question.score)
+    const questions = useSelector(SelectQuestions)
+    const {score} = useSelector(SelectQuestion)
     const dispatch = useDispatch()
 
     const refresh = () => {

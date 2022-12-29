@@ -1,16 +1,16 @@
 import React, {useRef} from 'react';
-import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import { useSelector} from "react-redux";
 import './statistic.css'
 import cx from 'classnames'
-import {refresh, setShowScore} from "../../redux/slices/questionSlice";
+import {refresh, SelectQuestion, SelectQuestions} from "../../redux/slices/questionSlice";
 import ScrollToTop from "react-scroll-to-top";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import {useAppDispatch} from "../../redux/store";
 
 const Statistic = () => {
-    const questions = useSelector(state => state.question.items)
-    const {currentQuestion, showScore, score, skeleton, click} = useSelector(state => state.question)
-    const dispatch = useDispatch()
+    const questions = useSelector(SelectQuestions)
+    const {score, click} = useSelector(SelectQuestion)
+    const dispatch = useAppDispatch()
 
     return (
         <div className='statistic'>
@@ -33,7 +33,7 @@ const Statistic = () => {
                                 >{q.answerText}</div>
                             )}
                         </div>
-                        <div className='statistic__answer'>Ваша відповідь: <span>{click[(question.id) - 1]}</span>
+                        <div className='statistic__answer'>Ваша відповідь: <span>{click[Number((question.id)) - 1]}</span>
                         </div>
                     </div>
                 </Link>

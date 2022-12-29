@@ -1,9 +1,38 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
-import {fetchQuestion, removeTodo} from "./questionSlice";
+import {removeTodo} from "./questionSlice";
+import {RootState} from "../store";
 
+enum Status {
+    LOADING = 'loading',
+    SUCCESS = 'success',
+    ERROR = 'error',
+}
 
-const initialState = {
+interface adminSliceState {
+    questionText: string,
+    answerOption: {
+        answerText: string,
+        isCorrect: boolean
+    },
+    answerOption1: {
+        answerText: string,
+        isCorrect: boolean
+    },
+    answerOption2: {
+        answerText: string,
+        isCorrect: boolean
+    },
+    answerOption3: {
+        answerText: string,
+        isCorrect: boolean
+    },
+    status: Status
+    isAdminCreate: boolean,
+    isError: boolean,
+}
+
+const initialState: adminSliceState = {
     questionText: '',
     answerOption: {
         answerText: '',
@@ -21,6 +50,7 @@ const initialState = {
         answerText: '',
         isCorrect: false
     },
+    status: Status.LOADING,
     isAdminCreate: false,
     isError: false,
 
@@ -29,7 +59,7 @@ const initialState = {
 export const fetchAdmin = createAsyncThunk(
     'admin/fetchAdmin',
     async (params, thunkAPI) => {
-        const {admin} = thunkAPI.getState()
+        const {admin} = thunkAPI.getState() as  RootState
         const {questionText, answerOption, answerOption1, answerOption2, answerOption3} = admin
         await axios.post(
             "https://632742f4ba4a9c47533406de.mockapi.io/items",
@@ -59,7 +89,7 @@ export const fetchAdmin = createAsyncThunk(
 
 export const fetchAdminDelete = createAsyncThunk(
     'admin/fetchAdminDelete',
-    async (params, thunkAPI) => {
+    async (params: string | number, thunkAPI) => {
         const {dispatch} = thunkAPI
         await axios.delete(
             `https://632742f4ba4a9c47533406de.mockapi.io/items/${params}`
@@ -72,25 +102,25 @@ export const adminSlice = createSlice({
     name: 'admin',
     initialState,
     reducers: {
-        setQuestionText(state, action) {
+        setQuestionText(state, action: PayloadAction<string>) {
             state.questionText = action.payload
         },
-        setAnswerOptionText(state, action) {
+        setAnswerOptionText(state, action: PayloadAction<string>) {
             state.answerOption.answerText = action.payload
         },
-        setAnswerOption1Text(state, action) {
+        setAnswerOption1Text(state, action: PayloadAction<string>) {
             state.answerOption1.answerText = action.payload
         },
-        setAnswerOption2Text(state, action) {
+        setAnswerOption2Text(state, action: PayloadAction<string>) {
             state.answerOption2.answerText = action.payload
         },
-        setAnswerOption3Text(state, action) {
+        setAnswerOption3Text(state, action: PayloadAction<string>) {
             state.answerOption3.answerText = action.payload
         },
-        setAnswerOptionIsCorrect(state, action) {
+        setAnswerOptionIsCorrect(state, action: PayloadAction<boolean>) {
             if (!(state.answerOption1.isCorrect)
-                & !(state.answerOption2.isCorrect)
-                & !(state.answerOption3.isCorrect)) {
+                && !(state.answerOption2.isCorrect)
+                && !(state.answerOption3.isCorrect)) {
                 state.answerOption.isCorrect = action.payload
             } else {
                 state.answerOption.isCorrect = true
@@ -99,10 +129,10 @@ export const adminSlice = createSlice({
                 state.answerOption3.isCorrect = false
             }
         },
-        setAnswerOption1IsCorrect(state, action) {
+        setAnswerOption1IsCorrect(state, action: PayloadAction<boolean>) {
             if (!(state.answerOption.isCorrect)
-                & !(state.answerOption2.isCorrect)
-                & !(state.answerOption3.isCorrect)) {
+                && !(state.answerOption2.isCorrect)
+                && !(state.answerOption3.isCorrect)) {
                 state.answerOption1.isCorrect = action.payload
             } else {
                 state.answerOption.isCorrect = false
@@ -112,10 +142,10 @@ export const adminSlice = createSlice({
             }
 
         },
-        setAnswerOption2IsCorrect(state, action) {
+        setAnswerOption2IsCorrect(state, action: PayloadAction<boolean>) {
             if (!(state.answerOption.isCorrect)
-                & !(state.answerOption1.isCorrect)
-                & !(state.answerOption3.isCorrect)) {
+                && !(state.answerOption1.isCorrect)
+                && !(state.answerOption3.isCorrect)) {
                 state.answerOption2.isCorrect = action.payload
             } else {
                 state.answerOption.isCorrect = false
@@ -125,10 +155,10 @@ export const adminSlice = createSlice({
             }
 
         },
-        setAnswerOption3IsCorrect(state, action) {
+        setAnswerOption3IsCorrect(state, action: PayloadAction<boolean>) {
             if (!(state.answerOption.isCorrect)
-                & !(state.answerOption1.isCorrect)
-                & !(state.answerOption2.isCorrect)) {
+                && !(state.answerOption1.isCorrect)
+                && !(state.answerOption2.isCorrect)) {
                 state.answerOption3.isCorrect = action.payload
             } else {
                 state.answerOption.isCorrect = false
@@ -137,10 +167,10 @@ export const adminSlice = createSlice({
                 state.answerOption3.isCorrect = true
             }
         },
-        setIsAdminCreate(state, action) {
+        setIsAdminCreate(state, action: PayloadAction<boolean>) {
             state.isAdminCreate = action.payload
         },
-        refreshAnswerOption(state, action) {
+        refreshAnswerOption(state) {
             state.questionText = ''
             state.answerOption.answerText = ''
             state.answerOption1.answerText = ''
@@ -152,26 +182,29 @@ export const adminSlice = createSlice({
             state.answerOption3.isCorrect = false
 
         },
-        setIsError(state, action){
+        setIsError(state, action: PayloadAction<boolean>) {
             state.isError = action.payload
         }
 
     },
-    extraReducers: {
-        [fetchAdminDelete.fulfilled]: (state, action) => {
-            console.log('success')
+    extraReducers: (builder) => {
+        builder.addCase(fetchAdminDelete.pending, (state, action) => {
+            state.status = Status.LOADING
+        });
 
-        },
-        [fetchAdminDelete.pending]: (state, action) => {
-            console.log('loading')
+        builder.addCase(fetchAdminDelete.fulfilled, (state, action) => {
+            state.status = Status.SUCCESS
+        });
 
-        },
-        [fetchAdminDelete.rejected]: (state, action) => {
-            console.log('error')
-        }
+        builder.addCase(fetchAdminDelete.rejected, (state, action) => {
+            state.status = Status.ERROR
+        });
+    },
 
-    }
 })
+
+
+export const SelectAdmin = (state: RootState) => state.admin
 
 export const {
     setQuestionText, setAnswerOptionText, setAnswerOption1Text, setAnswerOption2Text, setAnswerOption3Text,
