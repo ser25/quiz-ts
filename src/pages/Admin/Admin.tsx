@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
 import './admin.css'
 import {useDispatch, useSelector} from "react-redux";
-import {SelectAdmin, setIsAdminCreate} from "../../redux/slices/adminSlice";
+import {SelectAdmin} from "../../redux/slices/admin/selectors";
+import {setIsAdminCreate} from '../../redux/slices/admin/slice'
 import AdminQuestionText from "./adminQuestionText/AdminQuestionText";
 import AdminDelete from "./AdminDelete/AdminDelete";
 import {useNavigate} from "react-router-dom";

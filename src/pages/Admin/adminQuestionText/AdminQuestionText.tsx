@@ -2,16 +2,17 @@ import React, {useEffect, useState} from 'react';
 import '../admin.css'
 import {Checkbox, TextField} from "@mui/material";
 import {
-    fetchAdmin, refreshAnswerOption, SelectAdmin,
+    fetchAdmin, refreshAnswerOption,
     setAnswerOption1IsCorrect,
     setAnswerOption1Text,
     setAnswerOption2IsCorrect,
     setAnswerOption2Text,
     setAnswerOption3IsCorrect, setAnswerOption3Text,
     setAnswerOptionIsCorrect,
-    setAnswerOptionText, setIsError,
+    setAnswerOptionText,
     setQuestionText
-} from "../../../redux/slices/adminSlice";
+} from "../../../redux/slices/admin/slice";
+import {SelectAdmin} from "../../../redux/slices/admin/selectors"
 import {useSelector} from "react-redux";
 import {useForm, SubmitHandler} from "react-hook-form";
 import MyInput from "../../../UI/Input/Input";

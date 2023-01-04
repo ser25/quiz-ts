@@ -4,7 +4,7 @@ import cx from "classnames";
 import './adminDelete.css'
 import {fetchQuestion, SelectQuestions} from "../../../redux/slices/questionSlice";
 import ClearIcon from '@mui/icons-material/Clear';
-import {fetchAdminDelete} from "../../../redux/slices/adminSlice";
+import {fetchAdminDelete} from "../../../redux/slices/admin/slice";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import ScrollToTop from "react-scroll-to-top";
 import {useAppDispatch} from "../../../redux/store";

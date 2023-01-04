@@ -1,36 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
-import {removeTodo} from "./questionSlice";
-import {RootState} from "../store";
+import {removeTodo} from "../questionSlice";
+import {RootState} from "../../store";
+import {adminSliceState, Status} from './types'
 
-enum Status {
-    LOADING = 'loading',
-    SUCCESS = 'success',
-    ERROR = 'error',
-}
-
-interface adminSliceState {
-    questionText: string,
-    answerOption: {
-        answerText: string,
-        isCorrect: boolean
-    },
-    answerOption1: {
-        answerText: string,
-        isCorrect: boolean
-    },
-    answerOption2: {
-        answerText: string,
-        isCorrect: boolean
-    },
-    answerOption3: {
-        answerText: string,
-        isCorrect: boolean
-    },
-    status: Status
-    isAdminCreate: boolean,
-    isError: boolean,
-}
 
 const initialState: adminSliceState = {
     questionText: '',
@@ -204,7 +177,7 @@ export const adminSlice = createSlice({
 })
 
 
-export const SelectAdmin = (state: RootState) => state.admin
+
 
 export const {
     setQuestionText, setAnswerOptionText, setAnswerOption1Text, setAnswerOption2Text, setAnswerOption3Text,

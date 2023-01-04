@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
-import {store} from "./redux/store";
-import Questions from "./component/question/Questions";
+import {store, persistor} from "./redux/store";
+import {PersistGate} from 'redux-persist/integration/react'
 import App from "./App";
 import {ThemeProvider, createTheme} from "@mui/material";
 
@@ -18,20 +18,20 @@ const theme = createTheme({
 
 const rootElement = document.getElementById('root')
 
-if(rootElement){
+if (rootElement) {
     const root = ReactDOM.createRoot(rootElement);
     root.render(
         <Provider store={store}>
-            <ThemeProvider theme={theme}>
-                <App />
-            </ThemeProvider>
+            <PersistGate loading={null} persistor={persistor}>
+                <ThemeProvider theme={theme}>
+                    <App/>
+                </ThemeProvider>
+            </PersistGate>
+
 
         </Provider>
-
-
     );
 }
-
 
 
 // If you want to start measuring performance in your app, pass a function
