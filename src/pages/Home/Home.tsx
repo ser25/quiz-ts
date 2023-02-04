@@ -29,7 +29,7 @@ const Home: FC = () => {
                     </button>
                 </Link>
             }
-            {isAuth &&
+            {true && //isAuth
                 <Link to={'/admin'}>
                     <button>Admin</button>
                 </Link>
